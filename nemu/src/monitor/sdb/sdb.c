@@ -15,9 +15,11 @@
 
 #include <isa.h>
 #include <cpu/cpu.h>
+#include <memory/vaddr.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <stdlib.h>
 
 static int is_batch_mode = false;
 
@@ -54,6 +56,13 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args);
+static int cmd_info(char *args);
+static int cmd_x(char *args);
+static int cmd_p(char *args);
+static int cmd_w(char *args);
+static int cmd_d(char *args);
+
 static struct {
   const char *name;
   const char *description;
@@ -62,6 +71,12 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
+  { "si", "Use si N to run N instructions", cmd_si},
+  { "info", "info r to show the status of regfile; info w to show the status of watchpoints" , cmd_info},
+  { "x" ,"Usage: x N EXPR to see the contents of RAM from EXPR" , cmd_x},
+  {"p","Calculate the value of a expression",cmd_p},
+  {"w","Usage: w expr -- set a watch point over a expression",cmd_w},
+  {"d","Usage:d N -- delete watch point with NO N",cmd_d},
 
   /* TODO: Add more commands */
 
@@ -89,6 +104,104 @@ static int cmd_help(char *args) {
     }
     printf("Unknown command '%s'\n", arg);
   }
+  return 0;
+}
+
+static int cmd_si(char *args){
+	if(args == NULL){
+	printf("Illegal number of parameters.\n");
+	printf("Check help si to see the Usage.\n");
+	return 1;
+	}
+	int num = atoi(args);
+	cpu_exec(num);
+	printf("Successfully run %d instructions!\n",num);
+	return 0;
+}
+
+static int cmd_info(char* args){
+	if(args == NULL){
+	printf("Illegal number of parameters.\n");
+	printf("Check help info to see the Usage.\n");
+	return 0;
+	}
+	if(strcmp(args,"r") == 0){
+  isa_reg_display();
+	printf("===================\n");
+
+	}
+	else if(strcmp(args,"w") == 0){
+	//Todo: print watchpoint
+    //show_wp();
+	}
+	else{
+	printf("Illegal parameters.\n");
+	return 1;
+	}
+	return 0;
+}
+
+static int cmd_x(char *args){
+  char *arg = strtok(NULL," ");
+	if(args == NULL){
+	printf("Illegal parameters.\n");
+	return 0;
+	}
+
+	int N = atoi(args);  //string to int
+
+	arg = strtok(NULL," ");
+	if(arg == NULL){
+    printf("Illegal Parameters.\n");
+    return 0;
+	}
+
+  bool succ = true;
+  vaddr_t addr = expr(arg,&succ);  //Todo: expr()
+  if(!succ)
+  {
+    printf("Invalid Expression!\n");
+    return 1;
+  }
+
+  printf("Bytes : \tLow ===> High\n");
+  
+	for (int i=0;i<N;i++){
+		uint32_t data = vaddr_read(addr+4*i,4);
+		printf("0x%08x :\t",addr+4*i);
+		for(int j=0;j<4;j++){
+			printf("%02x ",data&0xff);
+			data = data >> 8 ;
+		}
+		printf("\n");
+	
+	}
+	return 0;
+}
+
+static int cmd_p(char *args){
+  if(args == NULL){
+    printf("Empty Expression!\n");
+    return 1;
+  }
+  init_regex();
+  bool succ = true;
+  int res = expr(args,&succ);
+  if(succ){
+    printf("Result: %d\n",res);
+  }
+  else
+  {
+    printf("Invalid Expression!\n");
+
+  }
+  
+  return 0 ;
+}
+static int cmd_w(char *args){
+  return 0;
+}
+static int cmd_d(char *args){
   return 0;
 }
 
