@@ -25,6 +25,9 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+bool new_wp();
+bool free_wp(int NO);
+void show_wp();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -115,7 +118,7 @@ static int cmd_si(char *args){
 	}
 	int num = atoi(args);
 	cpu_exec(num);
-	printf("Successfully run %d instructions!\n",num);
+	//printf("Successfully run %d instructions!\n",num);
 	return 0;
 }
 
@@ -132,7 +135,7 @@ static int cmd_info(char* args){
 	}
 	else if(strcmp(args,"w") == 0){
 	//Todo: print watchpoint
-    //show_wp();
+    show_wp();
 	}
 	else{
 	printf("Illegal parameters.\n");
@@ -199,9 +202,22 @@ static int cmd_p(char *args){
   return 0 ;
 }
 static int cmd_w(char *args){
+  if(args == NULL){
+    printf("Empty Expression!\n");
+    return 1;
+  }
+  new_wp();
   return 0;
 }
 static int cmd_d(char *args){
+  if(args == NULL){
+    printf("N cannot be empty!\n");
+    return 1;
+  }
+  int NO = atoi(args);
+  bool succ = free_wp(NO);
+  if(succ) printf("Successfully deleted watch point %d\n!",NO);
+  else return 1;
   return 0;
 }
 

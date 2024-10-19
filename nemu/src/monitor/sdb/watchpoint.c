@@ -20,6 +20,8 @@
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
+  char expr[32];
+  uint32_t val;
 
   /* TODO: Add more members if necessary */
 
@@ -41,3 +43,78 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
+bool new_wp(char *args){
+    Assert(free_ != NULL, "Watch points exceeded Maximum!\n");
+    bool succ = true;
+    int res = expr(args,&succ);
+    if(!succ)
+    {
+      printf("Invalid Expression!\n");
+      return false;
+    }
+
+    WP* wp = free_;
+    free_ = free_->next;
+    wp->next = head;
+    head = wp;
+
+    strcpy(wp->expr,args);
+    wp->val = res;
+    printf("Successfully inserted a watch point %d!\n",wp->NO);
+    return true;
+}
+
+
+bool free_wp(int N){
+  Assert(head != NULL, "Empty watch points!\n");
+  WP* wp = head;
+  WP* prec = NULL;  // once freed wp, need to connect prec and wp->next
+  while(head->NO != N && wp!=NULL){
+    prec = wp;
+    wp = wp->next;
+  }
+  if(wp == NULL){
+    printf("Invalid NO!\n");
+    return false;
+  }
+  if(prec != NULL)  prec->next = wp->next;  // reconnect the link list
+  else head = wp->next;
+  wp->next = free_;
+  free_ = wp;
+  memset(wp->expr,0,sizeof(char)*32);
+  wp->val = 0;
+  return true;
+  
+}
+
+void show_wp(){
+  if(head == NULL){
+    printf("Empty watch points!\n");
+    return;
+  }
+  printf("NO\t\tExpr\t\tVal\n");
+  WP* wp = head;
+  while(wp != NULL){
+    printf("%2d\t\t%s\t\t0x%x(%u)\n",wp->NO,wp->expr,wp->val,wp->val);
+    wp = wp->next;
+  }
+}
+
+bool wp_changed(){
+  WP* wp = head;
+  bool flag = false;
+  while(wp != NULL){
+    bool succ = true;
+    uint32_t curr_val = expr(wp->expr,&succ);
+    if(curr_val != wp->val){
+      if(!flag){
+        printf("Reached watch points :\n");
+      }
+      printf("%d : %u --> %u\n", wp->NO,wp->val,curr_val);
+      wp->val = curr_val;
+      flag = true;
+    }
+    wp = wp->next;
+  }
+  return flag;
+}

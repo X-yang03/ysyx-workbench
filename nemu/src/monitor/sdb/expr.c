@@ -50,6 +50,7 @@ static struct rule {
   {"\\&\\&", TK_AND},    // logical AND
   {"\\|\\|", TK_OR},     // logical OR
   {"\\!", TK_NOT},       // logical NOT
+  {"\\pc", TK_REG},     // register pc
   {"\\$0", TK_REG},      // register $0
   {"ra", TK_REG},        // register ra
   {"[stg]p", TK_REG},    // registers sp, tp, gp
