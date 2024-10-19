@@ -24,11 +24,11 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
-  printf("pc : %08x\n" , cpu.pc);
+  printf("pc : %08x\t" , cpu.pc);
   printf("$0 : %08x\n" , cpu.dollar_0);	
-	printf("ra : %08x\n" , cpu.ra);
+	printf("ra : %08x\t" , cpu.ra);
 	printf("sp : %08x\n" , cpu.sp);
-	printf("gp : %08x\n" , cpu.gp);
+	printf("gp : %08x\t" , cpu.gp);
 	printf("tp : %08x\n\n" , cpu.tp); 
 
 	printf("t0 : %08x\t" , cpu.t0);
