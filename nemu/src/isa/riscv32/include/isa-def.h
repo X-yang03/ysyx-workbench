@@ -18,6 +18,7 @@
 
 #include <common.h>
 
+//define CPU struct for riscv32
 typedef struct {
   word_t gpr[MUXDEF(CONFIG_RVE, 16, 32)];
   vaddr_t pc;
