@@ -135,7 +135,7 @@ static int cmd_info(char* args){
 	}
 	else if(strcmp(args,"w") == 0){
 	//Todo: print watchpoint
-    //show_wp();
+    show_wp();
 	}
 	else{
 	printf("Illegal parameters.\n");
