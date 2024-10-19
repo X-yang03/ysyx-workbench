@@ -157,14 +157,13 @@ static int cmd_x(char *args){
 	}
 
   bool succ = true;
-  vaddr_t addr = 0x80000000;//expr(arg,&succ);  //Todo: expr()
+  vaddr_t addr = expr(arg,&succ);  //Todo: expr()
   if(!succ)
   {
     printf("Invalid Expression!\n");
     return 1;
   }
 
-	//vaddr_t addr = atoi(arg); //vaddr_t is actually uint32_t
   printf("Bytes : \tLow ===> High\n");
   
 	for (int i=0;i<N;i++){
