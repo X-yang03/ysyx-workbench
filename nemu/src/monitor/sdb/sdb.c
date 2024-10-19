@@ -180,7 +180,23 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args){
-  return 0;
+  if(args == NULL){
+    printf("Empty Expression!\n");
+    return 1;
+  }
+  init_regex();
+  bool succ = true;
+  int res = expr(args,&succ);
+  if(succ){
+    printf("Result: %d\n",res);
+  }
+  else
+  {
+    printf("Invalid Expression!\n");
+
+  }
+  
+  return 0 ;
 }
 static int cmd_w(char *args){
   return 0;
