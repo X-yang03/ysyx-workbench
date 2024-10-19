@@ -43,14 +43,25 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
-WP* new_wp(){
+bool new_wp(char *args){
     Assert(free_ != NULL, "Watch points exceeded Maximum!\n");
+    bool succ = true;
+    int res = expr(args,&succ);
+    if(!succ)
+    {
+      printf("Invalid Expression!\n");
+      return false;
+    }
 
     WP* wp = free_;
     free_ = free_->next;
     wp->next = head;
     head = wp;
-    return wp;
+
+    strcpy(wp->expr,args);
+    wp->val = res;
+    printf("Successfully inserted a watch point %d!\n",wp->NO);
+    return true;
 }
 
 
