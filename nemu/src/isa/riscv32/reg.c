@@ -24,6 +24,14 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
+  printf("$0 : %08x\n" , cpu.dollar_0);	
+	printf("ra : %08x\n" , cpu.ra);
+	// printf("edx : %08x\n" , cpu.sp);
+	// printf("ebx : %08x\n" , cpu.ebx);
+	// printf("esp : %08x\n" , cpu.esp);
+	// printf("ebp : %08x\n" , cpu.ebp);
+	// printf("esi : %08x\n" , cpu.esi);
+	// printf("edi : %08x\n" , cpu.edi);
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
