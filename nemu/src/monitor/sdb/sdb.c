@@ -54,6 +54,18 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args){
+	if(args == NULL){
+	printf("Illegal number of parameters.\n");
+	printf("Check help si to see the Usage.\n");
+	return 1;
+	}
+	int num = atoi(args);
+	cpu_exec(num);
+	printf("Successfully run %d instructions!\n",num);
+	return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -62,6 +74,7 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
+  { "si", "Use si N to run N instructions", cmd_si},
 
   /* TODO: Add more commands */
 
