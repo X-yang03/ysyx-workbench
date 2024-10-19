@@ -29,14 +29,14 @@ void isa_reg_display() {
 	printf("ra : %08x\n" , cpu.ra);
 	printf("sp : %08x\n" , cpu.sp);
 	printf("gp : %08x\n" , cpu.gp);
-	printf("tp : %08x\n" , cpu.tp); 
+	printf("tp : %08x\n\n" , cpu.tp); 
 
 	printf("t0 : %08x\t" , cpu.t0);
   printf("t1 : %08x\t" , cpu.t1);
-  printf("t2 : %08x\n" , cpu.t2);
+  printf("t2 : %08x\n\n" , cpu.t2);
 
   printf("s0 : %08x\t" , cpu.s0);
-  printf("s1 : %08x\n" , cpu.s1);
+  printf("s1 : %08x\n\n" , cpu.s1);
 
   printf("a0 : %08x\t" , cpu.a0);
   printf("a1 : %08x\t" , cpu.a1);
@@ -45,7 +45,7 @@ void isa_reg_display() {
   printf("a4 : %08x\t" , cpu.a4);
   printf("a5 : %08x\t" , cpu.a5);
   printf("a6 : %08x\t" , cpu.a6);
-  printf("a7 : %08x\n" , cpu.a7);
+  printf("a7 : %08x\n\n" , cpu.a7);
 
   printf("s2 : %08x\t" , cpu.s2);
   printf("s3 : %08x\t" , cpu.s3);
@@ -56,7 +56,7 @@ void isa_reg_display() {
   printf("s8 : %08x\t" , cpu.s8);
   printf("s9 : %08x\t" , cpu.s9);
   printf("s10 : %08x\t" , cpu.s10);
-  printf("s11 : %08x\n" , cpu.s11);
+  printf("s11 : %08x\n\n" , cpu.s11);
 
   printf("t3 : %08x\t" , cpu.t3);
   printf("t4 : %08x\n" , cpu.t4);
