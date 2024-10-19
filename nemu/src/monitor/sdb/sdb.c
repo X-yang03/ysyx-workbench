@@ -15,9 +15,11 @@
 
 #include <isa.h>
 #include <cpu/cpu.h>
+#include <memory/vaddr.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <stdlib.h>
 
 static int is_batch_mode = false;
 
@@ -139,7 +141,42 @@ static int cmd_info(char* args){
 }
 
 static int cmd_x(char *args){
-  return 0;
+  char *arg = strtok(NULL," ");
+	if(args == NULL){
+	printf("Illegal parameters.\n");
+	return 0;
+	}
+
+	int N = atoi(args);  //string to int
+
+	arg = strtok(NULL," ");
+	if(arg == NULL){
+    printf("Illegal Parameters.\n");
+    return 0;
+	}
+
+  bool succ = true;
+  vaddr_t addr = 0x800000;//expr(arg,&succ);  //Todo: expr()
+  if(!succ)
+  {
+    printf("Invalid Expression!\n");
+    return 1;
+  }
+
+	//vaddr_t addr = atoi(arg); //vaddr_t is actually uint32_t
+  printf("Bytes : \tLow ===> High\n");
+  
+	for (int i=0;i<N;i++){
+		uint32_t data = vaddr_read(addr+4*i,4);
+		printf("0x%08x :\t",addr+4*i);
+		for(int j=0;j<4;j++){
+			printf("%02x ",data&0xff);
+			data = data >> 8 ;
+		}
+		printf("\n");
+	
+	}
+	return 0;
 }
 
 static int cmd_p(char *args){
