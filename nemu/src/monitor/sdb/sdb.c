@@ -118,7 +118,7 @@ static int cmd_si(char *args){
 	}
 	int num = atoi(args);
 	cpu_exec(num);
-	printf("Successfully run %d instructions!\n",num);
+	//printf("Successfully run %d instructions!\n",num);
 	return 0;
 }
 
@@ -210,6 +210,14 @@ static int cmd_w(char *args){
   return 0;
 }
 static int cmd_d(char *args){
+  if(args == NULL){
+    printf("N cannot be empty!\n");
+    return 1;
+  }
+  int NO = atoi(args);
+  bool succ = free_wp(NO);
+  if(succ) printf("Successfully deleted watch point %d\n!",NO);
+  else return 1;
   return 0;
 }
 
