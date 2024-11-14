@@ -1,4 +1,4 @@
-VERILATOR_FLAGS=--cc --exe --build -j 0 -Wall --trace
+VERILATOR_FLAGS=--cc --exe --build -j 0 -Wall --trace-fst
 all:
 	@echo "Write this Makefile by your self."
 
@@ -11,4 +11,5 @@ sim:
 
 clean:
 	rm -rf obj_dir
+	rm -f wave.vcd
 include ../Makefile

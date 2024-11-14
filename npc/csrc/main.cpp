@@ -3,7 +3,7 @@
 #include <assert.h>
 #include "Vtop.h"
 #include "verilated.h"
-#include "verilated_vcd_c.h"
+#include "verilated_fst_c.h"
 int main(int argc, char** argv){
 	int time = 10;
 	VerilatedContext* contextp = new VerilatedContext;
@@ -12,7 +12,7 @@ int main(int argc, char** argv){
 	VerilatedVcdC *tfp= new VerilatedVcdC;   //初始化VCD对象指针
   contextp->traceEverOn(true); //打开追踪
 	top->trace(tfp,0);
-  tfp->open("wave.vcd");  //保存位置
+  tfp->open("wave.fst");  //保存位置
 
 while (time--){
 	int a = rand() & 1;
