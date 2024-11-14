@@ -9,7 +9,7 @@ int main(int argc, char** argv){
 	VerilatedContext* contextp = new VerilatedContext;
   contextp->commandArgs(argc, argv);
   Vtop* top = new Vtop{contextp};
-	VerilatedVcdC *tfp= new VerilatedVcdC;   //初始化VCD对象指针
+	VerilatedFstC *tfp= new VerilatedFstC;   //初始化VCD对象指针
   contextp->traceEverOn(true); //打开追踪
 	top->trace(tfp,0);
   tfp->open("wave.fst");  //保存位置
