@@ -1,4 +1,4 @@
-VERILATOR_FLAGS=--cc --exe --build -j 0 -Wall
+VERILATOR_FLAGS=--cc --exe --build -j 0 -Wall --trace
 all:
 	@echo "Write this Makefile by your self."
 
@@ -9,11 +9,6 @@ sim:
    
 	 obj_dir/Vtop
 
-wave:
-	verilator $(VERILATOR_FLAGS) --trace csrc/main.cpp vsrc/top.v
-  
-	obj_dir/Vtop
-	run gtkwave wave.vcd
 clean:
 	rm -rf obj_dir
 include ../Makefile
