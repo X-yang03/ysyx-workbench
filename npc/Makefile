@@ -55,5 +55,6 @@ sim:
 clean:
 	rm -rf $(BUILD_DIR)
 	rm -f wave.*
+	rm -rf obj_dir
 
 include ../Makefile
