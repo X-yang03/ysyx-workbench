@@ -1,4 +1,4 @@
-#VERILATOR_FLAGS=--cc --exe --build -j 0 -Wall --trace-fst
+VERILATOR_FLAGS=--cc --exe --build -j 0 -Wall --trace-fst
 all:
 	@echo "Write this Makefile by your self."
 
@@ -7,8 +7,8 @@ NXDC_FILES = constr/top.nxdc
 INC_PATH ?=
 
 VERILATOR = verilator
-VERILATOR_CFLAGS += -MMD --build -cc  \
-				-O3 --x-assign fast --x-initial fast --noassert --trace-fst
+#VERILATOR_CFLAGS += -MMD --build -cc  \
+#				-O3 --x-assign fast --x-initial fast --noassert --trace-fst
 
 BUILD_DIR = ./build
 OBJ_DIR = $(BUILD_DIR)/obj_dir
