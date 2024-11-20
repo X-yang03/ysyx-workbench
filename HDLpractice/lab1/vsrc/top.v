@@ -1,7 +1,7 @@
 module top(
-  input a[7:0],
-  input b[1:0],
-  output f[1:0]
+  input [7:0] a,
+  input [1:0] b,
+  output [1:0] f
 );
   assign f = (b == 2'b00) ? a[1:0]:
              (b == 2'b01) ? a[3:2]:
