@@ -1,37 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include "Vtop.h"
-#include "verilated.h"
-#include "verilated_fst_c.h"
 #include <nvboard.h>
+#include <Vtop.h>
 
 static TOP_NAME dut;
 
 void nvboard_bind_all_pins(TOP_NAME* top);
 
-void init_board(){
-     nvboard_bind_all_pins(&dut);
-     nvboard_init();
+static void single_cycle() {
+  dut.clk = 0; dut.eval();
+  dut.clk = 1; dut.eval();
 }
 
-int main(int argc, char** argv){
-	int time = 10;
-	VerilatedContext* contextp = new VerilatedContext;
-    contextp->commandArgs(argc, argv);
-    Vtop* top = new Vtop{contextp};
-    VerilatedFstC *tfp= new VerilatedFstC;   //初始化VCD对象指针
-    contextp->traceEverOn(true); //打开追踪
-	top->trace(tfp,0);
-    tfp->open("wave.fst");  //保存位置
-    init_board();
-    tfp->close();
+static void reset(int n) {
+  dut.rst = 1;
+  while (n -- > 0) single_cycle();
+  dut.rst = 0;
+}
 
-   while(true){
-       dut.eval();
-       nvboard_update();
-   }
-    delete top;
-    delete contextp;
-    return 0;
+int main() {
+  nvboard_bind_all_pins(&dut);
+  nvboard_init();
+
+  reset(10);
+
+  while(1) {
+    nvboard_update();
+    single_cycle();
+  }
 }
