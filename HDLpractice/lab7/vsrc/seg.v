@@ -1,8 +1,10 @@
 module seg_hex(
   input  [3:0] a, // 4-bit input, a[3] is the enable bit, a[2:0] is the data bit
+  input en,
   output reg [6:0] h
 );
     always@(a) begin
+     if(en) begin
         case(a)
             4'b0000: h = 7'b1000000; // 0
             4'b0001: h = 7'b1111001; // 1
@@ -22,5 +24,8 @@ module seg_hex(
             4'b1111: h = 7'b0001110; // F
             default: h = 7'b1111111; // default to all off
         endcase
+    end
+    else 
+        h = 7'b1111111; // all off
     end
 endmodule

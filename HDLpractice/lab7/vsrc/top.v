@@ -28,15 +28,15 @@ module top(
         .ready(ready),
         .overflow(overflow)
     );
-    seg_hex seg0(.a(data[3:0]), .h(seg_data_l));
-    seg_hex seg1(.a(data[7:4]), .h(seg_data_h));
+    seg_hex seg0(.a(data[3:0]), .en(ready), .h(seg_data_l));
+    seg_hex seg1(.a(data[7:4]), .en(ready), .h(seg_data_h));
     rom mem(
         .addr(data),
         .data(ascii)
     );
-    seg_hex seg2(.a(ascii[3:0]), .h(seg_ascii_l));
-    seg_hex seg3(.a(ascii[7:4]), .h(seg_ascii_h));
+    seg_hex seg2(.a(ascii[3:0]), .en(ready), .h(seg_ascii_l));
+    seg_hex seg3(.a(ascii[7:4]), .en(ready), .h(seg_ascii_h));
 
-    seg_hex seg4(.a(key_cnt[3:0]), .h(seg_key_l)); 
-    seg_hex seg5(.a(key_cnt[7:4]), .h(seg_key_h));
+    seg_hex seg4(.a(key_cnt[3:0]), .en(1), .h(seg_key_l)); 
+    seg_hex seg5(.a(key_cnt[7:4]), .en(1), .h(seg_key_h));
 endmodule
