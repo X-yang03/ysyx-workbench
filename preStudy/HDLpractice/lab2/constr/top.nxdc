@@ -1,0 +1,7 @@
+top=top
+
+en SW8
+a (SW7, SW6, SW5, SW4, SW3, SW2, SW1, SW0)#这八个开关作为输入端，每两个开关一组，共四组。
+f (LD3 ,LD2, LD1, LD0)#用LED显示输出
+c (SEG0G, SEG0F, SEG0E, SEG0D, SEG0C, SEG0B, SEG0A)
+
